@@ -1,6 +1,6 @@
 package View;
 
-import Handlers.MainHandler;
+import Handlers.ParseTable;
 import Utils.ConverterUtil;
 import Utils.GeneratorUtil;
 
@@ -61,10 +61,15 @@ public class Application {
                 HashMap<String, Set<String>> _rules = ConverterUtil.INSTANCE.toRules(rules);
                 HashMap<String, Set<String>> _follows = ConverterUtil.INSTANCE.toFollow(follows);
                 HashSet<String> nonTerminal = GeneratorUtil.INSTANCE.generateNonTerminal(_rules);
+                HashSet<String> terminal = GeneratorUtil.INSTANCE.generateTerminal(_rules);
                 HashMap<String, HashSet<String>> firsts = GeneratorUtil.INSTANCE.generateFirst(_rules, nonTerminal);
 
                 FirstList.setText(ConverterUtil.INSTANCE.toShowFirsts(firsts));
-                MainHandler.INSTANCE.run(_rules, nonTerminal, _follows, firsts);
+
+                ParseTable parseTable = new ParseTable();
+                HashMap<String, HashMap<String, Integer>> LL1Table = parseTable.generateTable();
+
+
             }
         });
 

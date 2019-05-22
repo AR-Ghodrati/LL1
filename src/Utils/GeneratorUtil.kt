@@ -41,6 +41,25 @@ object GeneratorUtil {
         return rules.keys.toHashSet()
     }
 
+
+    fun generateTerminal(rules: HashMap<State, Set<State>>): HashSet<State> {
+        val ret: HashSet<Terminal> = HashSet()
+        rules.values.forEach { states ->
+            states.forEach { state ->
+                if (getChildren(state).first()[0].isLowerCase())
+                    ret.add(getChildren(state).first())
+            }
+        }
+        return ret
+    }
+
+
+    fun generateColumns(rules: HashMap<State, Set<State>>): MutableList<String> {
+        val terminal = generateTerminal(rules)
+        terminal.add("$")
+        return terminal.toMutableList()
+    }
+
     private fun getChildren(state: State): Set<State> {
         return state.trim().split(' ').toSet()
     }

@@ -12,7 +12,7 @@ public class ParseTable {
     private HashMap<String, String[]> followSet;
     private ArrayList<String> nonTerminals;
 
-    ParseTable() {
+    public ParseTable() {
         grammar = new HashMap<Integer, String>();
         firstSet = new HashMap<String, String[]>();
         followSet = new HashMap<String, String[]>();
@@ -97,6 +97,10 @@ public class ParseTable {
             String production = g.getValue();
             String LHS = getLHS(production);
             String RHS = getRHS(production);
+
+            System.out.println("production : " + production
+                    + "  LHS : " + LHS + " RHS : " + RHS);
+
             int productionNum = g.getKey();
 
 
@@ -133,6 +137,7 @@ public class ParseTable {
         ArrayList<String> inputParse = new ArrayList<>(Arrays.asList(temp));
         HashMap<String, HashMap<String, Integer>> LL1Table = generateTable();
 
+        System.out.println(LL1Table);
         state.add("Program");
 
         while (inputParse.size() > 0) {

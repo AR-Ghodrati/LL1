@@ -76,6 +76,8 @@ public class Draw {
     private static String[][] getData() {
         ParseTable parseTable = new ParseTable();
         HashMap<String, HashMap<String, Integer>> LL1Table = parseTable.generateTable();
+        System.out.println(LL1Table.keySet());
+
         String data[][] = new String[6][15];
 
         int i = 0;
