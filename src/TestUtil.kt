@@ -2,26 +2,26 @@ import Utils.GeneratorUtil
 
 fun main() {
 
-    val nonTerminal = arrayListOf("Program", "Statement", "Expression", "Term", "Block", "Statements")
+    val nonTerminal = setOf("Program", "Statement", "Expression", "Term", "Block", "Statements")
 
-    val t = GeneratorUtil.GenerateFrists(
+    val t = GeneratorUtil.generateFirst(
         hashMapOf(
-            "Program" to mutableListOf("Statement")
-            , "Statement" to mutableListOf(
+            "Program" to setOf("Statement")
+            , "Statement" to setOf(
                 "if Expression then Block",
                 "while Expression do Block",
                 "Expression"
             )
-            , "Expression" to mutableListOf(
+            , "Expression" to setOf(
                 "Term => identifier",
                 "isZero? Term",
                 "not Expression",
                 "++ identifier",
                 "-- identifier"
             )
-            , "Term" to mutableListOf("constant")
-            , "Block" to mutableListOf("Statement", "{ Statements }")
-            , "Statements" to mutableListOf("Statement", "Statements", "ε")
+            , "Term" to setOf("identifier", "constant")
+            , "Block" to setOf("Statement", "{ Statements }")
+            , "Statements" to setOf("Statement", "Statements", "ε")
         )
         , nonTerminal
     )
