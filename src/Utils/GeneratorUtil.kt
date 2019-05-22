@@ -42,7 +42,7 @@ object GeneratorUtil {
     }
 
     private fun getChildren(state: State): Set<State> {
-        return state.split(' ').toSet()
+        return state.trim().split(' ').toSet()
     }
 
 
