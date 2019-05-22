@@ -37,6 +37,9 @@ object GeneratorUtil {
         return table
     }
 
+    fun generateNonTerminal(rules: HashMap<State, Set<State>>): HashSet<State> {
+        return rules.keys.toHashSet()
+    }
 
     private fun getChildren(state: State): Set<State> {
         return state.split(' ').toSet()
