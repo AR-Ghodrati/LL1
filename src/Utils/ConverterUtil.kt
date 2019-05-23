@@ -1,22 +1,29 @@
 package Utils
 
-import java.util.HashSet
-import kotlin.collections.HashMap
-import kotlin.collections.set
-
 object ConverterUtil {
 
-    fun toRules(rules: MutableList<String>): HashMap<State, Set<State>> {
-        val ret: HashMap<State, Set<State>> = HashMap()
+    fun toRules(rules: MutableList<String>): HashMap<State, Set<Pair<State, Int>>> {
+        val ret: HashMap<State, Set<Pair<State, Int>>> = HashMap()
+        var ruleNumber = 0
+
         rules.forEach { rule ->
-            ret[rule.split('→').first().trim()] = rule
-                .split('→')
-                .last()
-                .trim()
-                .split('|')
-                .toSet()
+            val data: HashSet<Pair<State, Int>> = HashSet()
+            val RHS = rule.split('→').last().split('|')
+
+            RHS.forEach {
+                data.add(it to (++ruleNumber))
+            }
+
+            ret[rule.split('→').first().trim()] = data
         }
         return ret
+    }
+
+    fun getStartRule(rules: MutableList<String>): State {
+        rules.forEach { rule ->
+            return rule.split('→').first().trim()
+        }
+        return ""
     }
 
     fun toFollow(follows: MutableList<String>): HashMap<State, Set<State>> {

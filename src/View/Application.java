@@ -3,9 +3,12 @@ package View;
 import Handlers.MainHandler;
 import Utils.ConverterUtil;
 import Utils.GeneratorUtil;
+import kotlin.Pair;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
+import java.util.List;
 import java.util.*;
 
 public class Application {
@@ -59,12 +62,12 @@ public class Application {
             public void actionPerformed(ActionEvent e) {
 
                 Status.setText("Generating Data...");
-                HashMap<String, Set<String>> _rules = ConverterUtil.INSTANCE.toRules(rules);
+                HashMap<String, Set<Pair<String, Integer>>> _rules = ConverterUtil.INSTANCE.toRules(rules);
                 HashMap<String, Set<String>> _follows = ConverterUtil.INSTANCE.toFollow(follows);
                 HashSet<String> nonTerminal = GeneratorUtil.INSTANCE.generateNonTerminal(_rules);
                 HashSet<String> terminal = GeneratorUtil.INSTANCE.generateTerminal(_rules);
                 HashMap<String, HashSet<String>> firsts = GeneratorUtil.INSTANCE.generateFirst(_rules, nonTerminal);
-
+                HashMap<Pair<String, String>, Integer> table = new HashMap<>();
 
                 MainHandler.INSTANCE.generateFirstTable(firsts
                         , model -> FirstTable.setModel(model));
@@ -73,8 +76,26 @@ public class Application {
                         model -> FollowTable.setModel(model));
 
                 MainHandler.INSTANCE.run(_rules, nonTerminal, terminal, _follows, firsts
-                        , table -> {
+                        , (tableModel, _LL1Table) -> {
                             Status.setText("Generating Done!Waiting For Input...");
+                            LL1Table.setModel(tableModel);
+                            table.putAll(_LL1Table);
+
+
+                            String data = Checker.getText();
+                            MainHandler.INSTANCE.check(data
+                                    , ConverterUtil.INSTANCE.getStartRule(rules)
+                                    , table
+                                    , _rules
+                                    , isAccepted -> {
+                                        if (isAccepted) {
+                                            Status.setText("Accepted");
+                                            Status.setForeground(Color.GREEN);
+                                        } else {
+                                            Status.setText("Rejected");
+                                            Status.setForeground(Color.RED);
+                                        }
+                                    });
 
                         });
 
