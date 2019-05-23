@@ -2,14 +2,7 @@ package Utils
 
 import java.util.HashSet
 import kotlin.collections.HashMap
-import kotlin.collections.MutableList
-import kotlin.collections.Set
-import kotlin.collections.first
-import kotlin.collections.forEach
-import kotlin.collections.forEachIndexed
-import kotlin.collections.last
 import kotlin.collections.set
-import kotlin.collections.toSet
 
 object ConverterUtil {
 
@@ -41,8 +34,18 @@ object ConverterUtil {
 
     fun toShowRule(rules: MutableList<String>): String {
         var rule = ""
+        var ruleNumber = 0
+
         rules.forEachIndexed { _, s ->
-            rule += " $s \n"
+            val LHS = s.split('→').first()
+            val RHS = s.split('→').last().split('|')
+
+            var RHSRules = ""
+
+            RHS.forEach { rule ->
+                RHSRules += "$rule   (${++ruleNumber})\n | "
+            }
+            rule += "$LHS → ${RHSRules.trim().removeSuffix("|")}\n"
         }
         return rule
     }

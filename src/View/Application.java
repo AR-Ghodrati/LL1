@@ -1,6 +1,6 @@
 package View;
 
-import Handlers.ParseTable;
+import Handlers.MainHandler;
 import Utils.ConverterUtil;
 import Utils.GeneratorUtil;
 
@@ -17,11 +17,12 @@ public class Application {
     private JTextField Checker;
     private JButton Check;
     private JTextArea Rules;
-    private JTextArea FirstList;
-    private JTextArea FollowLIst;
     private JButton AddRule;
     private JButton AddFollow;
     private JLabel Status;
+    private JScrollPane Table;
+    private JTable FirstTable;
+    private JTable FollowTable;
 
     private List<String> rules;
     private List<String> follows;
@@ -50,7 +51,6 @@ public class Application {
                 if (!follow.isEmpty()) {
                     follows.add(follow);
                     FollowSet.setText(null);
-                    FollowLIst.setText(ConverterUtil.INSTANCE.toShowRule(follows));
                 }
             }
         });
@@ -58,17 +58,25 @@ public class Application {
             @Override
             public void actionPerformed(ActionEvent e) {
 
+                Status.setText("Generating Data...");
                 HashMap<String, Set<String>> _rules = ConverterUtil.INSTANCE.toRules(rules);
                 HashMap<String, Set<String>> _follows = ConverterUtil.INSTANCE.toFollow(follows);
                 HashSet<String> nonTerminal = GeneratorUtil.INSTANCE.generateNonTerminal(_rules);
                 HashSet<String> terminal = GeneratorUtil.INSTANCE.generateTerminal(_rules);
                 HashMap<String, HashSet<String>> firsts = GeneratorUtil.INSTANCE.generateFirst(_rules, nonTerminal);
 
-                FirstList.setText(ConverterUtil.INSTANCE.toShowFirsts(firsts));
 
-                ParseTable parseTable = new ParseTable();
-                HashMap<String, HashMap<String, Integer>> LL1Table = parseTable.generateTable();
+                MainHandler.INSTANCE.generateFirstTable(firsts
+                        , model -> FirstTable.setModel(model));
 
+                MainHandler.INSTANCE.generateFollowTable(_follows,
+                        model -> FollowTable.setModel(model));
+
+                MainHandler.INSTANCE.run(_rules, nonTerminal, terminal, _follows, firsts
+                        , table -> {
+                            Status.setText("Generating Done!Waiting For Input...");
+
+                        });
 
             }
         });
