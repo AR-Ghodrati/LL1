@@ -26,19 +26,6 @@ object ConverterUtil {
         return ""
     }
 
-    fun toFollow(follows: MutableList<String>): HashMap<State, Set<State>> {
-        val ret: HashMap<State, Set<State>> = HashMap()
-        follows.forEach { follow ->
-            ret[follow.split('→').first().trim()] = follow
-                .split('→')
-                .last()
-                .trim()
-                .split('|')
-                .toSet()
-        }
-        return ret
-    }
-
     fun toShowRule(rules: MutableList<String>): String {
         var rule = ""
         var ruleNumber = 0

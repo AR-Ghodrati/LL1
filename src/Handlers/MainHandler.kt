@@ -14,7 +14,7 @@ object MainHandler {
         rules: HashMap<State, Set<Pair<State, Int>>>
         , nonTerminal: Set<String>
         , Terminal: Set<Terminal>
-        , follows: HashMap<String, Set<String>>
+        , follows: HashMap<String, HashSet<String>>
         , firsts: HashMap<String, HashSet<String>>
         , listener: LL1Listener
     ) {
@@ -38,17 +38,27 @@ object MainHandler {
         rules.forEach { LHS, RHS ->
             RHS.forEach { Rule ->
                 val first = GeneratorUtil.getChildren(Rule.first).first()
-
-                if (Terminal.any { it == first })
-                    data[LHS to first] = Rule.second
-                else {
-                    val _firsts = firsts[first]
-                    _firsts?.forEach {
+                follows[LHS]?.forEach {
+                    if (first == "ε")
                         data[LHS to it] = Rule.second
-                    }
+                    else data[LHS to it] = Int.MIN_VALUE
                 }
             }
         }
+
+        rules.forEach { LHS, RHS ->
+            RHS.forEach { Rule ->
+                val first = GeneratorUtil.getChildren(Rule.first).first()
+
+                if (Terminal.any { it == first && first != "ε" })
+                    data[LHS to first] = Rule.second
+                else {
+                    val _firsts = firsts[first]
+                    _firsts?.forEach { data[LHS to it] = Rule.second }
+                }
+            }
+        }
+
 
         //println("Data : $data")
 
@@ -57,6 +67,7 @@ object MainHandler {
         data.keys.forEach {
             if (!tableLHS.contains(it.first)) tableLHS.add(it.first)
         }
+
 
         table.addColumn("", tableLHS.toTypedArray()) // Add NonTerminal
 
@@ -122,6 +133,8 @@ object MainHandler {
             } else if (RF == IF) {
                 ruleStep = ruleStep.removePrefix(RF).trim()
                 inputStep = inputStep.removePrefix(IF).trim()
+                println("RF == IF , So RemovePrefix")
+                println("ruleStep : $ruleStep  , inputStep : $inputStep")
             } else {
                 val nextRuleNum = table[RF to IF]
                 println("nextRuleNum : $nextRuleNum")
@@ -131,10 +144,17 @@ object MainHandler {
                     break
                 }
 
-                ruleStep = ruleStep.removePrefix(RF).trim()
-                println("RemovePrefixRuleStep : $ruleStep")
-                ruleStep = String("${getRuleValue(rules, nextRuleNum)} $ruleStep".toByteArray())
-                println("NewRuleStep : $ruleStep")
+                val next = getRuleValue(rules, nextRuleNum)
+
+                if (next == "ε") {
+                    ruleStep = ruleStep.removePrefix(RF).trim()
+                    println("$RF Removed")
+                } else {
+                    ruleStep = ruleStep.removePrefix(RF).trim()
+                    println("RemovePrefixRuleStep : $ruleStep")
+                    ruleStep = String("$next $ruleStep".toByteArray())
+                    println("NewRuleStep : $ruleStep")
+                }
 
             }
         }
@@ -178,7 +198,7 @@ object MainHandler {
         listener.onDone(def)
     }
 
-    fun generateFollowTable(follow: HashMap<State, Set<State>>, listener: FirstTableListener) {
+    fun generateFollowTable(follow: HashMap<State, HashSet<State>>, listener: FirstTableListener) {
         val def = DefaultTableModel()
         follow.forEach { t, u ->
             def.addColumn(t, u.toTypedArray())

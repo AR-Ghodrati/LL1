@@ -37,6 +37,41 @@ object GeneratorUtil {
         return table
     }
 
+    fun generateFollow(
+        rules: HashMap<State, Set<Pair<State, Int>>>
+        , nonTerminal: Set<Terminal>
+        , startRule: State
+        , firstTable: FirstTable
+    ): FollowTable {
+
+        val table: FollowTable = HashMap()
+
+        if (Have_Lambda(firstTable)) {
+
+            table[startRule] = HashSet()
+            table[startRule]?.add("$")
+
+            rules.forEach { LHS, _ ->
+                rules.forEach { _LHS, _RHS ->
+                    _RHS.forEach { Rule ->
+
+                        if (Rule.first.contains(LHS) && LHS != _LHS) {
+                            if (!table.containsKey(LHS)) table[LHS] = HashSet()
+                            val follow = getFollow(_LHS to Rule.first, firstTable, nonTerminal, LHS)
+
+                            if (follow != null)
+                                table[LHS]?.addAll(follow)
+                            else
+                                table[_LHS]?.let { table[LHS]?.addAll(it) }
+                        }
+                    }
+                }
+            }
+        }
+
+        return table
+    }
+
     fun generateNonTerminal(rules: HashMap<State, Set<Pair<State, Int>>>): HashSet<State> {
         return rules.keys.toHashSet()
     }
@@ -62,8 +97,41 @@ object GeneratorUtil {
         return terminal.toMutableList()
     }
 
-    fun getChildren(state: State): Set<State> {
-        return state.trim().split(' ').toSet()
+    fun getChildren(state: State): MutableList<State> {
+        return state.trim().split(' ').toMutableList()
+    }
+
+    private fun Have_Lambda(firstTable: FirstTable): Boolean {
+        for ((_, RHS) in firstTable)
+            if (RHS.contains("ε"))
+                return true
+        return false
+    }
+
+    private fun getFollow(
+        rule: Pair<State, State>
+        , firstTable: FirstTable
+        , nonTerminal: Set<Terminal>
+        , itemFollow: State
+    ): Set<State>? {
+
+
+        var next = ""
+        val children = getChildren(rule.second)
+
+        if (children.size > children.indexOf(itemFollow) + 1
+            && children.indexOf(itemFollow) >= 0
+        )
+            next = getChildren(rule.second)[children.indexOf(itemFollow) + 1]
+
+        if (next.isNotEmpty()) {
+            return if (nonTerminal.any { it == next })
+                firstTable[next]?.apply { remove("ε") }?.toSet()
+            else
+                setOf(next)
+
+        }
+        return null
     }
 
 

@@ -8,16 +8,6 @@
     <properties/>
     <border type="none"/>
     <children>
-      <component id="3500" class="javax.swing.JTextField" binding="Checker">
-        <constraints>
-          <grid row="15" column="0" row-span="4" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="3" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties>
-          <text value=""/>
-        </properties>
-      </component>
       <component id="c253b" class="javax.swing.JTextArea" binding="Rules">
         <constraints>
           <grid row="2" column="2" row-span="6" col-span="1" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
@@ -32,17 +22,7 @@
       </component>
       <component id="1c340" class="javax.swing.JTextField" binding="InputRules">
         <constraints>
-          <grid row="2" column="0" row-span="5" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
-            <preferred-size width="150" height="-1"/>
-          </grid>
-        </constraints>
-        <properties>
-          <text value=""/>
-        </properties>
-      </component>
-      <component id="2d8a7" class="javax.swing.JTextField" binding="FollowSet">
-        <constraints>
-          <grid row="9" column="0" row-span="4" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
+          <grid row="2" column="0" row-span="6" col-span="2" vsize-policy="0" hsize-policy="0" anchor="0" fill="3" indent="0" use-parent-layout="false">
             <preferred-size width="150" height="-1"/>
           </grid>
         </constraints>
@@ -64,15 +44,6 @@
         </constraints>
         <properties>
           <text value=""/>
-        </properties>
-      </component>
-      <component id="d5a9e" class="javax.swing.JButton" binding="AddFollow">
-        <constraints>
-          <grid row="13" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <label value="AddToFollowSet"/>
-          <text value="AddToFollowSet"/>
         </properties>
       </component>
       <component id="abf1d" class="javax.swing.JLabel">
@@ -99,37 +70,12 @@
           <text value="FollowTable"/>
         </properties>
       </component>
-      <component id="26661" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="14" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Enter Grammer For Test"/>
-        </properties>
-      </component>
       <component id="64168" class="javax.swing.JLabel">
         <constraints>
           <grid row="1" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Enter Your Rule"/>
-        </properties>
-      </component>
-      <component id="3788e" class="javax.swing.JLabel">
-        <constraints>
-          <grid row="8" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <text value="Enter Follow Element"/>
-        </properties>
-      </component>
-      <component id="22b68" class="javax.swing.JButton" binding="AddRule">
-        <constraints>
-          <grid row="7" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
-        </constraints>
-        <properties>
-          <label value="AddRule"/>
-          <text value="AddRule"/>
         </properties>
       </component>
       <scrollpane id="90efb" binding="Table">
@@ -179,9 +125,18 @@
           <text value="ParseTable"/>
         </properties>
       </component>
+      <component id="22b68" class="javax.swing.JButton" binding="AddRule">
+        <constraints>
+          <grid row="8" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <label value="AddRule"/>
+          <text value="AddRule"/>
+        </properties>
+      </component>
       <component id="e8723" class="javax.swing.JLabel" binding="Status">
         <constraints>
-          <grid row="19" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+          <grid row="19" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Waiting..."/>
@@ -189,10 +144,44 @@
       </component>
       <component id="d9134" class="javax.swing.JButton" binding="Check">
         <constraints>
-          <grid row="19" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+          <grid row="18" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
         </constraints>
         <properties>
           <text value="Check"/>
+        </properties>
+      </component>
+      <component id="3500" class="javax.swing.JTextField" binding="Checker">
+        <constraints>
+          <grid row="12" column="0" row-span="6" col-span="2" vsize-policy="0" hsize-policy="6" anchor="8" fill="3" indent="0" use-parent-layout="false">
+            <preferred-size width="150" height="-1"/>
+          </grid>
+        </constraints>
+        <properties>
+          <text value=""/>
+        </properties>
+      </component>
+      <component id="26661" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="11" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Enter Grammer For Test"/>
+        </properties>
+      </component>
+      <component id="ed9e8" class="javax.swing.JButton" binding="generateButton" default-binding="true">
+        <constraints>
+          <grid row="10" column="0" row-span="1" col-span="2" vsize-policy="0" hsize-policy="3" anchor="0" fill="1" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="Generate"/>
+        </properties>
+      </component>
+      <component id="b69e9" class="javax.swing.JLabel">
+        <constraints>
+          <grid row="9" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="0" use-parent-layout="false"/>
+        </constraints>
+        <properties>
+          <text value="GenerateTables"/>
         </properties>
       </component>
     </children>
