@@ -27,8 +27,13 @@ ID       [a-zA-z][a-zA-Z0-9]*
 "ε"    return T_LAMBDA;
 "{"    return T_OPEN_BRACKET;
 "}"    return T_CLOSE_BRACKET;
+";"    return T_SEMICOLEM;
+
 
 {ID}+  return T_IDENTIFIER;
+
+[\t]   {}
+[\n]   return 0;
 
 
 %%

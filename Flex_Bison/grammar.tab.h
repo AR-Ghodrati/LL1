@@ -52,7 +52,8 @@
      T_LAMBDA = 268,
      T_GRATER = 269,
      T_OPEN_BRACKET = 270,
-     T_CLOSE_BRACKET = 271
+     T_CLOSE_BRACKET = 271,
+     T_SEMICOLEM = 272
    };
 #endif
 /* Tokens.  */
@@ -70,6 +71,7 @@
 #define T_GRATER 269
 #define T_OPEN_BRACKET 270
 #define T_CLOSE_BRACKET 271
+#define T_SEMICOLEM 272
 
 
 

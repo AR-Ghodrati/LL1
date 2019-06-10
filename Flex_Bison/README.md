@@ -18,12 +18,17 @@ ID       [a-zA-z][a-zA-Z0-9]*
 "--"   return T_MM;
 "=>"   return T_GRATER;
 
-
+";"    return T_SEMICOLEM;
 "ε"    return T_LAMBDA;
 "{"    return T_OPEN_BRACKET;
 "}"    return T_CLOSE_BRACKET;
 
 {ID}+  return T_IDENTIFIER;
+
+
+[\t]   {}
+[\n]   return 0;
+
 ```
 
 
@@ -61,3 +66,12 @@ Statements :
 	| T_LAMBDA 
 	;
 ````
+###  Build :
+
+````
+1- bison -d  grammar.y
+2- flex lex.l
+3- clang lex.yy.c grammar.tab.c
+4- ./a.out
+````
+
