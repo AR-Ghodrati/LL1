@@ -4,6 +4,9 @@
 #include <math.h>
 #include <string.h>
 #include "grammar.tab.h"
+
+#define YY_DECL int yylex()
+
 %}
 
 DIGIT    [0-9]
@@ -23,8 +26,6 @@ ID       [a-zA-z][a-zA-Z0-9]*
 "--"   return T_MM;
 "=>"   return T_GRATER;
 
-
-"ε"    return T_LAMBDA;
 "{"    return T_OPEN_BRACKET;
 "}"    return T_CLOSE_BRACKET;
 ";"    return T_SEMICOLEM;
@@ -32,10 +33,11 @@ ID       [a-zA-z][a-zA-Z0-9]*
 
 {ID}+  return T_IDENTIFIER;
 
-[\t]   {}
-[\n]   return 0;
+[\r\n]      return 0;
+[ \t]           ; // ignore all whitespace
 
 
 %%
 
 int yywrap(){}
+
