@@ -19,7 +19,6 @@ ID       [a-zA-z][a-zA-Z0-9]*
 "=>"   return T_GRATER;
 
 ";"    return T_SEMICOLEM;
-"ε"    return T_LAMBDA;
 "{"    return T_OPEN_BRACKET;
 "}"    return T_CLOSE_BRACKET;
 
@@ -63,7 +62,7 @@ Block :
 
 Statements :
 	Statement Statements 
-	| T_LAMBDA 
+	| /* LAMBDA */
 	;
 ````
 ###  Build :
